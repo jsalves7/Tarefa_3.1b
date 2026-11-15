@@ -8,6 +8,8 @@ const {
 } = require('express-validator');
 const CONFIG = require("../config/config");
 const AuthController = require("../controllers/auth.controller");
+const SponsorController = require("../controllers/sponsor.controller");
+const ExpertController = require("../controllers/expert.controller");
 
 router.route('/')
     .get(AuthController.checkAuth, AnimalController.get)
@@ -25,6 +27,13 @@ router.route("/deactivate/:id")
 
 router.route("/activate/:id")
     .put(AuthController.checkAuth, [param("id").isMongoId()], AnimalController.activate);
+
+// Vista pública do animal: patrocinadores e especialistas ativos (só campos não sensíveis)
+router.route('/:id/sponsors')
+    .get(AuthController.checkAuth, [param("id").isMongoId()], SponsorController.getByAnimal);
+
+router.route('/:id/experts')
+    .get(AuthController.checkAuth, [param("id").isMongoId()], ExpertController.getByAnimal);
 
 router.route('/:id')
     .get(AuthController.checkAuth, [param("id").isMongoId()], AnimalController.getOne)
