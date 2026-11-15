@@ -26,23 +26,42 @@
       <b-row>
         <b-col cols="2"></b-col>
         <b-col>
+          <div class="table-responsive">
           <table class="table table-striped">
             <caption class="sr-only">Lista de patrocinadores e animais patrocinados</caption>
             <thead class="thead-dark">
               <tr>
-                <th scope="col">NOME</th>
+                <th scope="col">
+                  NOME
+                  <i
+                    class="fas fa-arrow-up"
+                    v-if="sortType===1"
+                    @click="sort()"
+                    @keyup.enter="sort()"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Ordenar por nome"
+                  ></i>
+                  <i
+                    class="fas fa-arrow-down"
+                    v-else
+                    @click="sort()"
+                    @keyup.enter="sort()"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Ordenar por nome"
+                  ></i>
+                </th>
                 <th scope="col">TIPO</th>
                 <th scope="col">ANIMAIS</th>
-                <th scope="col">ESTADO</th>
                 <th scope="col">AÇÕES</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="sponsor of sponsors" :key="sponsor._id">
                 <td class="pt-4">{{sponsor.name}}</td>
-                <td class="pt-4">{{sponsor.type}}</td>
+                <td class="pt-4">{{typeLabel(sponsor.type)}}</td>
                 <td class="pt-4">{{animalNames(sponsor)}}</td>
-                <td class="pt-4">{{sponsor.active ? "ATIVO" : "INATIVO"}}</td>
                 <td>
                   <router-link
                     :to="{name:'editSponsor', params:{sponsorId: sponsor._id}}"
@@ -68,10 +87,11 @@
                 </td>
               </tr>
               <tr v-if="sponsors.length === 0">
-                <td colspan="5" class="text-center">Ainda não há patrocinadores.</td>
+                <td colspan="4" class="text-center">Ainda não há patrocinadores.</td>
               </tr>
             </tbody>
           </table>
+          </div>
         </b-col>
         <b-col cols="2"></b-col>
       </b-row>
@@ -79,8 +99,10 @@
       <!--DETALHE-->
       <b-modal id="sponsor-detail" :title="selected ? selected.name : ''" ok-only ok-title="FECHAR">
         <dl v-if="selected">
+          <dt>Estado</dt>
+          <dd>{{selected.active ? "Ativo" : "Inativo"}}</dd>
           <dt>Tipo</dt>
-          <dd>{{selected.type || "—"}}</dd>
+          <dd>{{selected.type ? typeLabel(selected.type) : "—"}}</dd>
           <dt>Email</dt>
           <dd>{{selected.email}}</dd>
           <dt>Website</dt>
@@ -101,6 +123,7 @@
 import { FETCH_SPONSORS, REMOVE_SPONSOR } from "@/store/sponsors/sponsor.constants";
 import HeaderPage from "@/components/HeaderPage.vue";
 import { mapGetters } from "vuex";
+import { typeLabel } from "@/utils/labels";
 
 export default {
   name: "ManageSponsors",
@@ -110,13 +133,15 @@ export default {
   data: function() {
     return {
       sponsors: [],
-      selected: null
+      selected: null,
+      sortType: 1
     };
   },
   computed: {
     ...mapGetters("sponsor", ["getSponsors", "getMessage"])
   },
   methods: {
+    typeLabel,
     fetchSponsors() {
       this.$store.dispatch(`sponsor/${FETCH_SPONSORS}`).then(
         () => {
@@ -130,6 +155,13 @@ export default {
     animalNames(sponsor) {
       const names = sponsor.animals.map(animal => animal.name);
       return names.length ? `${names.length}: ${names.join(", ")}` : "0";
+    },
+    sort() {
+      this.sponsors.sort(this.compareNames);
+      this.sortType = -this.sortType;
+    },
+    compareNames(a, b) {
+      return this.sortType * a.name.localeCompare(b.name, "pt");
     },
     viewSponsor(sponsor) {
       this.selected = sponsor;

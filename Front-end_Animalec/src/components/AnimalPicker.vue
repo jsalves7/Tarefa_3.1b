@@ -40,7 +40,7 @@
           @change="toggle(animal._id)"
         />
         <label class="custom-control-label" :for="checkId(animal._id)">
-          {{animal.name}} ({{animal.group}})
+          {{animal.name}} ({{groupLabel(animal.group)}})
         </label>
       </div>
     </div>
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { groupLabel } from "@/utils/labels";
+
 let uid = 0;
 
 export default {
@@ -79,6 +81,7 @@ export default {
     }
   },
   methods: {
+    groupLabel,
     checkId(id) {
       return `picker-${this.uid}-${id}`;
     },

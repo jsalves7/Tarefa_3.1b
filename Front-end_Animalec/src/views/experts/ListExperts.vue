@@ -26,14 +26,34 @@
       <b-row>
         <b-col cols="2"></b-col>
         <b-col>
+          <div class="table-responsive">
           <table class="table table-striped">
             <caption class="sr-only">Lista de especialistas e respetivas especializações</caption>
             <thead class="thead-dark">
               <tr>
-                <th scope="col">NOME</th>
+                <th scope="col">
+                  NOME
+                  <i
+                    class="fas fa-arrow-up"
+                    v-if="sortType===1"
+                    @click="sort()"
+                    @keyup.enter="sort()"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Ordenar por nome"
+                  ></i>
+                  <i
+                    class="fas fa-arrow-down"
+                    v-else
+                    @click="sort()"
+                    @keyup.enter="sort()"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Ordenar por nome"
+                  ></i>
+                </th>
                 <th scope="col">INSTITUIÇÃO</th>
                 <th scope="col">ESPECIALIZAÇÃO</th>
-                <th scope="col">ESTADO</th>
                 <th scope="col">AÇÕES</th>
               </tr>
             </thead>
@@ -42,7 +62,6 @@
                 <td class="pt-4">{{expert.name}}</td>
                 <td class="pt-4">{{expert.institution}}</td>
                 <td class="pt-4">{{specialization(expert)}}</td>
-                <td class="pt-4">{{expert.active ? "ATIVO" : "INATIVO"}}</td>
                 <td>
                   <router-link
                     :to="{name:'editExpert', params:{expertId: expert._id}}"
@@ -68,10 +87,11 @@
                 </td>
               </tr>
               <tr v-if="experts.length === 0">
-                <td colspan="5" class="text-center">Ainda não há especialistas.</td>
+                <td colspan="4" class="text-center">Ainda não há especialistas.</td>
               </tr>
             </tbody>
           </table>
+          </div>
         </b-col>
         <b-col cols="2"></b-col>
       </b-row>
@@ -79,6 +99,8 @@
       <!--DETALHE-->
       <b-modal id="expert-detail" :title="selected ? selected.name : ''" ok-only ok-title="FECHAR">
         <dl v-if="selected">
+          <dt>Estado</dt>
+          <dd>{{selected.active ? "Ativo" : "Inativo"}}</dd>
           <dt>Título</dt>
           <dd>{{selected.title || "—"}}</dd>
           <dt>Instituição</dt>
@@ -101,6 +123,7 @@
 import { FETCH_EXPERTS, REMOVE_EXPERT } from "@/store/experts/expert.constants";
 import HeaderPage from "@/components/HeaderPage.vue";
 import { mapGetters } from "vuex";
+import { groupLabel } from "@/utils/labels";
 
 export default {
   name: "ManageExperts",
@@ -110,13 +133,15 @@ export default {
   data: function() {
     return {
       experts: [],
-      selected: null
+      selected: null,
+      sortType: 1
     };
   },
   computed: {
     ...mapGetters("expert", ["getExperts", "getMessage"])
   },
   methods: {
+    groupLabel,
     fetchExperts() {
       this.$store.dispatch(`expert/${FETCH_EXPERTS}`).then(
         () => {
@@ -127,12 +152,19 @@ export default {
         }
       );
     },
+    sort() {
+      this.experts.sort(this.compareNames);
+      this.sortType = -this.sortType;
+    },
+    compareNames(a, b) {
+      return this.sortType * a.name.localeCompare(b.name, "pt");
+    },
     // Ex.: "Grupos: ave, peixe · Animais (2): Águia, Salmão"
     specialization(expert) {
       const parts = [];
       const groups = expert.specialization.groups;
       const names = expert.specialization.animals.map(animal => animal.name);
-      if (groups.length) parts.push(`Grupos: ${groups.join(", ")}`);
+      if (groups.length) parts.push(`Grupos: ${groups.map(groupLabel).join(", ")}`);
       if (names.length) parts.push(`Animais (${names.length}): ${names.join(", ")}`);
       return parts.join(" · ");
     },

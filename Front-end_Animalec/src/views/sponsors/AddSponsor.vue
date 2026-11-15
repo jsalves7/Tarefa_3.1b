@@ -3,7 +3,7 @@
     <b-container>
       <HeaderPage title="Adicionar Patrocinador" titleId="titulo-add-sponsor" />
       <b-row>
-        <b-col cols="2"></b-col>
+        <b-col md="2" class="d-none d-md-block"></b-col>
         <b-col>
           <SponsorForm :sponsor="sponsor" :animals="animals" @submit="add">
             <button type="submit" class="btn btn-outline-success btn-lg mr-2">
@@ -18,7 +18,7 @@
             </router-link>
           </SponsorForm>
         </b-col>
-        <b-col cols="2"></b-col>
+        <b-col md="2" class="d-none d-md-block"></b-col>
       </b-row>
     </b-container>
   </section>

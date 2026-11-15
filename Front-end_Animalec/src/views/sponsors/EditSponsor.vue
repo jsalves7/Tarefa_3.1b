@@ -3,7 +3,7 @@
     <b-container>
       <HeaderPage title="Editar Patrocinador" titleId="titulo-edit-sponsor" />
       <b-row>
-        <b-col cols="2"></b-col>
+        <b-col md="2" class="d-none d-md-block"></b-col>
         <b-col>
           <SponsorForm v-if="sponsor" :sponsor="sponsor" :animals="animals" @submit="update">
             <button type="submit" class="btn btn-outline-success btn-lg mr-2">
@@ -19,7 +19,7 @@
           </SponsorForm>
           <p v-else>A carregar...</p>
         </b-col>
-        <b-col cols="2"></b-col>
+        <b-col md="2" class="d-none d-md-block"></b-col>
       </b-row>
     </b-container>
   </section>

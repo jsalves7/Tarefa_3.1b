@@ -3,7 +3,7 @@
     <b-container>
       <HeaderPage title="Adicionar Especialista" titleId="titulo-add-expert" />
       <b-row>
-        <b-col cols="2"></b-col>
+        <b-col md="2" class="d-none d-md-block"></b-col>
         <b-col>
           <ExpertForm :expert="expert" :animals="animals" :institutions="institutions" @submit="add">
             <button type="submit" class="btn btn-outline-success btn-lg mr-2">
@@ -18,7 +18,7 @@
             </router-link>
           </ExpertForm>
         </b-col>
-        <b-col cols="2"></b-col>
+        <b-col md="2" class="d-none d-md-block"></b-col>
       </b-row>
     </b-container>
   </section>

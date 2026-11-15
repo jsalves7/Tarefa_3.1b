@@ -3,7 +3,7 @@
     <b-container>
       <HeaderPage title="Editar Especialista" titleId="titulo-edit-expert" />
       <b-row>
-        <b-col cols="2"></b-col>
+        <b-col md="2" class="d-none d-md-block"></b-col>
         <b-col>
           <ExpertForm
             v-if="expert"
@@ -25,7 +25,7 @@
           </ExpertForm>
           <p v-else>A carregar...</p>
         </b-col>
-        <b-col cols="2"></b-col>
+        <b-col md="2" class="d-none d-md-block"></b-col>
       </b-row>
     </b-container>
   </section>

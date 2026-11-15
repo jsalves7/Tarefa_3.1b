@@ -15,7 +15,7 @@
         />
         <div class="media-body">
           <strong>{{item.name}}</strong>
-          <div>{{item.type}}</div>
+          <div>{{typeLabel(item.type)}}</div>
           <a
             v-if="item.website"
             :href="item.website"
@@ -30,12 +30,14 @@
 
 <script>
 import sponsorService from "@/api/sponsor.service";
+import { typeLabel } from "@/utils/labels";
 
 export default {
   name: "AnimalSponsors",
   props: {
     animalId: { type: String, required: true }
   },
+  methods: { typeLabel },
   data() {
     return { items: [], loaded: false, error: false };
   },
