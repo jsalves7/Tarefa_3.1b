@@ -17,6 +17,7 @@ const pickFields = (body) => {
     FIELDS.forEach(field => {
         if (body[field] !== undefined) data[field] = body[field];
     });
+    if (data.type === "") delete data.type; // o formulário envia "" quando não há tipo
     if (data.animals) data.animals = [...new Set(data.animals.map(String))];
     return data;
 };

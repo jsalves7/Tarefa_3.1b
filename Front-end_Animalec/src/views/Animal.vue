@@ -91,18 +91,30 @@
           </b-card>
         </b-col>
       </b-row>
+      <b-row class="mt-3">
+        <b-col md="6">
+          <AnimalSponsors :animalId="$route.params.animalId" />
+        </b-col>
+        <b-col md="6">
+          <AnimalExperts :animalId="$route.params.animalId" />
+        </b-col>
+      </b-row>
     </b-container>
   </section>
 </template>
 
 <script>
 import HeaderPage from "@/components/HeaderPage.vue";
+import AnimalSponsors from "@/components/AnimalSponsors.vue";
+import AnimalExperts from "@/components/AnimalExperts.vue";
 import { EDIT_ANIMAL } from "@/store/animals/animal.constants";
 import { mapGetters } from "vuex";
 export default {
   name: "Animal",
   components: {
-    HeaderPage
+    HeaderPage,
+    AnimalSponsors,
+    AnimalExperts
   },
   data: function() {
     return {

@@ -14,7 +14,7 @@ const URL_OPTIONS = {
 
 const validators = [
     body('name').isString().not().isEmpty(),
-    body('type').optional().isIn(['empresa', 'instituicao', 'particular']),
+    body('type').optional({ checkFalsy: true }).isIn(['empresa', 'instituicao', 'particular']),
     body('email').isEmail(),
     body('website').optional({ checkFalsy: true }).isURL(URL_OPTIONS),
     body('logo').optional({ checkFalsy: true }).isURL(URL_OPTIONS),
