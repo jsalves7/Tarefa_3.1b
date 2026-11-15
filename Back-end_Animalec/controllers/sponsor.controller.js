@@ -76,15 +76,15 @@ exports.update = (req, res) => {
     if (errors.length > 0) return res.status(406).send(errors);
 
     const data = pickFields(req.body);
+    const changes = { $set: data };
+    if (req.body.type === "") changes.$unset = { type: 1 }; // tipo vazio limpa o campo
     animalsExist(data.animals, (error, exist) => {
         if (error) return res.status(500).send(INTERNAL_ERROR);
         if (!exist) return res.status(SponsorMessages.error.e1.http).send(SponsorMessages.error.e1);
 
         Sponsor.findOneAndUpdate({
             _id: req.params.id
-        }, {
-            $set: data
-        }, {
+        }, changes, {
             new: true
         }).populate("animals", "name group").exec((error, sponsor) => {
             if (error) return res.status(500).send(INTERNAL_ERROR);

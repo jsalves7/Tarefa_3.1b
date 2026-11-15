@@ -14,6 +14,8 @@ const URL_OPTIONS = {
 };
 
 const validators = [
+    // valores em array passariam nos validadores seguintes e falhariam no Mongoose (500)
+    body(['name', 'title', 'institution', 'email', 'website', 'photo', 'bio']).custom(value => !Array.isArray(value)).withMessage('Valor inválido'),
     body('name').isString().not().isEmpty(),
     body('title').optional().isString(),
     body('institution').optional().isString(),
@@ -22,9 +24,9 @@ const validators = [
     body('photo').optional({ checkFalsy: true }).isURL(URL_OPTIONS),
     body('bio').optional().isString(),
     body('specialization.groups').optional().isArray(),
-    body('specialization.groups.*').isIn(GROUPS),
+    body('specialization.groups.*').isString().isIn(GROUPS),
     body('specialization.animals').optional().isArray(),
-    body('specialization.animals.*').isMongoId()
+    body('specialization.animals.*').isString().isMongoId()
 ];
 
 router.route('/')

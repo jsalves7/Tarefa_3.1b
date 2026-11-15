@@ -13,6 +13,8 @@ const URL_OPTIONS = {
 };
 
 const validators = [
+    // valores em array passariam nos validadores seguintes e falhariam no Mongoose (500)
+    body(['name', 'type', 'email', 'website', 'logo', 'description', 'since']).custom(value => !Array.isArray(value)).withMessage('Valor inválido'),
     body('name').isString().not().isEmpty(),
     body('type').optional({ checkFalsy: true }).isIn(['empresa', 'instituicao', 'particular']),
     body('email').isEmail(),
@@ -21,7 +23,7 @@ const validators = [
     body('description').optional().isString(),
     body('since').optional({ checkFalsy: true }).isISO8601(),
     body('animals').optional().isArray(),
-    body('animals.*').isMongoId()
+    body('animals.*').isString().isMongoId()
 ];
 
 router.route('/')
