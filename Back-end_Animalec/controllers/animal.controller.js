@@ -7,7 +7,7 @@ const AnimalMessages = require("../messages/animal.messages");
 exports.get = (req, res) => {
 
     Animal.find(req.query).populate("comments.user", "name").exec((error, animals) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
         let message = AnimalMessages.success.s2;
 
@@ -31,7 +31,7 @@ exports.create = (req, res) => {
         level: req.body.level,
         links: req.body.links
     }).save((error, animal) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         let message = AnimalMessages.success.s0;
         message.body = animal;
         return res.header("location", "/animals/" + animal._id).status(message.http).send(message);
@@ -49,7 +49,7 @@ exports.update = (req, res) => {
     }, {
         new: true
     }, (error, animal) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (!animal) return res.status(AnimalMessages.error.e0.http).send(AnimalMessages.error.e0);
 
         let message = AnimalMessages.success.s1;
@@ -66,7 +66,7 @@ exports.delete = (req, res) => {
     Animal.deleteOne({
         _id: req.params.id
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (result.deletedCount <= 0) return res.status(AnimalMessages.error.e0.http).send(AnimalMessages.error.e0);
         return res.status(AnimalMessages.success.s3.http).send(AnimalMessages.success.s3);
 
@@ -81,7 +81,7 @@ exports.getOne = (req, res) => {
     Animal.findOne({
         _id: req.params.id
     }).populate("comments.user", "name").exec((error, animal) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (!animal) return res.status(AnimalMessages.error.e0.http).send(AnimalMessages.error.e0);
         let message = AnimalMessages.success.s2;
         message.body = animal;
@@ -101,7 +101,7 @@ exports.activate = (req, res) => {
             active: true
         }
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
         if (result.n <= 0) return res.status(AnimalMessages.error.e0.http).send(AnimalMessages.error.e0);
         return res.status(AnimalMessages.success.s6.http).send(AnimalMessages.success.s6);
@@ -120,7 +120,7 @@ exports.deactivate = (req, res) => {
             active: false
         }
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
         if (result.n <= 0) return res.status(AnimalMessages.error.e0.http).send(AnimalMessages.error.e0);
         return res.status(AnimalMessages.success.s4.http).send(AnimalMessages.success.s4);

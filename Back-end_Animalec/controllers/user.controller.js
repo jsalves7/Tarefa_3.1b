@@ -10,7 +10,7 @@ const Animal = require("../models/animal.model");
 exports.get = (req, res) => {
 
     User.find(req.query, (error, users) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
         let message = UserMessages.success.s2;
 
@@ -31,7 +31,7 @@ exports.getOne = (req, res) => {
     User.findOne({
         _id: req.params.id
     }, (error, user) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (!user) return res.status(UserMessages.error.e1.http).send(UserMessages.error.e1);
         let message = UserMessages.success.s2;
         message.body = user;
@@ -47,7 +47,7 @@ exports.create = (req, res) => {
     User.findOne({
         "auth.username": req.body.auth.username
     }, (error, user) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (user) return res.status(UserMessages.error.e0.http).send(UserMessages.error.e0)
 
         new User({
@@ -65,7 +65,7 @@ exports.create = (req, res) => {
                 password: req.body.auth.password
             }
         }).save((error, user) => {
-            if (error) throw error;
+            if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
             let payload = {
                 pk: user.auth.public_key
@@ -99,7 +99,7 @@ exports.update = (req, res) => {
     }, {
         new: true
     }, (error, user) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (!user) return res.status(UserMessages.error.e1.http).send(UserMessages.error.e1);
 
         let message = UserMessages.success.s1;
@@ -118,7 +118,7 @@ exports.delete = (req, res) => {
     User.deleteOne({
         _id: req.params.id
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (result.deletedCount <= 0) return res.status(UserMessages.error.e1.http).send(UserMessages.error.e1);
 
         Animal.updateMany({}, {
@@ -128,7 +128,7 @@ exports.delete = (req, res) => {
                 }
             }
         }, (error) => {
-            if (error) throw error;
+            if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
             return res.status(UserMessages.success.s3.http).send(UserMessages.success.s3);
         });
     });
@@ -146,7 +146,7 @@ exports.activate = (req, res) => {
             active: true
         }
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
         if (result.n <= 0) return res.status(UserMessages.error.e0.http).send(UserMessages.error.e0);
         return res.status(UserMessages.success.s6.http).send(UserMessages.success.s6);
@@ -165,7 +165,7 @@ exports.deactivate = (req, res) => {
             active: false
         }
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
         if (result.n <= 0) return res.status(UserMessages.error.e0.http).send(UserMessages.error.e0);
         return res.status(UserMessages.success.s4.http).send(UserMessages.success.s4);

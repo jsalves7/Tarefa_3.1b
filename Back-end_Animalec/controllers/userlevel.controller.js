@@ -7,7 +7,7 @@ const {
 exports.get = (req, res) => {
 
     UserLeveL.find(req.query, (error, levels) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
         let message = UserLevelMessages.success.s2;
 
@@ -28,7 +28,7 @@ exports.getOne = (req, res) => {
     UserLeveL.findOne({
         _id: req.params.id
     }, (error, user_level) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (!user_level) return res.status(UserLevelMessages.error.e0.http).send(UserLevelMessages.error.e0);
         let message = UserLevelMessages.success.s2;
         message.body = user_level;
@@ -47,7 +47,7 @@ exports.create = (req, res) => {
         avatar: req.body.avatar,
         max: req.body.max
     }).save((error, user_level) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
         let message = UserLevelMessages.success.s0;
         message.body = user_level;
@@ -68,7 +68,7 @@ exports.update = (req, res) => {
     }, {
         new: true
     }, (error, user_level) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (!user_level) return res.status(UserLevelMessages.error.e0.http).send(UserLevelMessages.error.e0);
 
         let message = UserLevelMessages.success.s1;
@@ -87,7 +87,7 @@ exports.delete = (req, res) => {
     UserLeveL.deleteOne({
         _id: req.params.id
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (result.deletedCount <= 0) return res.status(UserLevelMessages.error.e0.http).send(UserLevelMessages.error.e0);
 
         return res.status(UserLevelMessages.success.s3.http).send(UserLevelMessages.success.s3);

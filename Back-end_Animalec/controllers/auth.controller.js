@@ -24,7 +24,7 @@ exports.login = (req, res) => {
     User.findOne({
         "auth.username": username
     }, (error, user) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
 
         if (!user || !bcrypt.compareSync(password, user.auth.password))
             return res.header("Authorization", null).status(AuthMessages.error.e0.http).send(AuthMessages.error.e0);
@@ -54,11 +54,12 @@ exports.checkAuth = (req, res, callback) => {
     if (!token) return res.status(AuthMessages.error.e1.http).send(AuthMessages.error.e1);
 
     let payload = JWT.decode(token);
+    if (!payload || !payload.pk) return res.status(AuthMessages.error.e1.http).send(AuthMessages.error.e1);
 
     User.findOne({
         "auth.public_key": payload.pk
     }, (error, user) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (!user) return res.status(AuthMessages.error.e1.http).send(AuthMessages.error.e1);
 
         JWT.verify(token, user.auth.private_key, (error) => {

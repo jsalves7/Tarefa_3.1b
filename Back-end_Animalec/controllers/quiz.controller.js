@@ -7,7 +7,7 @@ const QuizMessages = require("../messages/quiz.messages");
 exports.get = (req, res) => {
 
     Quiz.find(req.query).populate("questions").exec((error, quizzes) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         let message = QuizMessages.success.s2;
 
         if (quizzes.length < 0)
@@ -30,9 +30,9 @@ exports.create = (req, res) => {
         level: req.body.level,
         questions: req.body.questions
     }).save((error, quiz) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         quiz.populate("questions", (error) => {
-            if (error) throw error;
+            if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
             let message = QuizMessages.success.s0;
             message.body = quiz;
             return res.header("location", "/quizzes/" + quiz._id).status(message.http).send(message);
@@ -52,10 +52,10 @@ exports.update = (req, res) => {
     }, {
         new: true
     }, (error, quiz) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (!quiz) return res.status(QuizMessages.error.e0.http).send(QuizMessages.error.e0);
         quiz.populate("questions", (error) => {
-            if (error) throw error;
+            if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
             let message = QuizMessages.success.s1;
             message.body = quiz;
             return res.status(message.http).send(message);
@@ -70,7 +70,7 @@ exports.delete = (req, res) => {
     Quiz.deleteOne({
         _id: req.params.id
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (result.deletedCount <= 0) return res.status(QuizMessages.error.e0.http).send(QuizMessages.error.e0);
         return res.status(QuizMessages.success.s3.http).send(QuizMessages.success.s3);
 
@@ -85,7 +85,7 @@ exports.getOne = (req, res) => {
     Quiz.findOne({
         _id: req.params.id
     }).populate("questions").exec((error, quiz) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         if (!quiz) return res.status(QuizMessages.error.e0.http).send(QuizMessages.error.e0);
         let message = QuizMessages.success.s2;
         message.body = quiz;
@@ -105,7 +105,7 @@ exports.activate = (req, res) => {
             active: true
         }
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         
         if (result.n <= 0) return res.status(QuizMessages.error.e0.http).send(QuizMessages.error.e0);
         return res.status(QuizMessages.success.s6.http).send(QuizMessages.success.s6);
@@ -124,7 +124,7 @@ exports.deactivate = (req, res) => {
             active: false
         }
     }, (error, result) => {
-        if (error) throw error;
+        if (error) return res.status(500).send({ http: 500, code: "InternalError", type: "error" });
         
         if (result.n <= 0) return res.status(QuizMessages.error.e0.http).send(QuizMessages.error.e0);
         return res.status(QuizMessages.success.s4.http).send(QuizMessages.success.s4);
