@@ -40,7 +40,7 @@
           @change="toggle(animal._id)"
         />
         <label class="custom-control-label" :for="checkId(animal._id)">
-          {{animal.name}} ({{groupLabel(animal.group)}})
+          {{animal.name}}<template v-if="animal.group"> ({{groupLabel(animal.group)}})</template>
         </label>
       </div>
     </div>

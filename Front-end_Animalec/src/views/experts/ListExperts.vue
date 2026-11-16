@@ -62,7 +62,7 @@
                 <td class="pt-4">{{expert.name}}</td>
                 <td class="pt-4">{{expert.institution}}</td>
                 <td class="pt-4">{{specialization(expert)}}</td>
-                <td>
+                <td class="text-nowrap">
                   <router-link
                     :to="{name:'editExpert', params:{expertId: expert._id}}"
                     tag="button"

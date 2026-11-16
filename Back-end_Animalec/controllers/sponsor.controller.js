@@ -17,7 +17,9 @@ const pickFields = (body) => {
     FIELDS.forEach(field => {
         if (body[field] !== undefined) data[field] = body[field];
     });
-    if (data.type === "") delete data.type; // o formulário envia "" quando não há tipo
+    // o formulário envia "" quando não há tipo ou data
+    if (data.type === "") delete data.type;
+    if (data.since === "") delete data.since;
     if (data.animals) data.animals = [...new Set(data.animals.map(String))];
     return data;
 };
@@ -77,7 +79,11 @@ exports.update = (req, res) => {
 
     const data = pickFields(req.body);
     const changes = { $set: data };
-    if (req.body.type === "") changes.$unset = { type: 1 }; // tipo vazio limpa o campo
+    // tipo ou data vazios limpam o campo
+    const unset = {};
+    if (req.body.type === "") unset.type = 1;
+    if (req.body.since === "") unset.since = 1;
+    if (Object.keys(unset).length > 0) changes.$unset = unset;
     animalsExist(data.animals, (error, exist) => {
         if (error) return res.status(500).send(INTERNAL_ERROR);
         if (!exist) return res.status(SponsorMessages.error.e1.http).send(SponsorMessages.error.e1);

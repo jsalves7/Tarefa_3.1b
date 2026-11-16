@@ -62,7 +62,7 @@
                 <td class="pt-4">{{sponsor.name}}</td>
                 <td class="pt-4">{{typeLabel(sponsor.type)}}</td>
                 <td class="pt-4">{{animalNames(sponsor)}}</td>
-                <td>
+                <td class="text-nowrap">
                   <router-link
                     :to="{name:'editSponsor', params:{sponsorId: sponsor._id}}"
                     tag="button"
