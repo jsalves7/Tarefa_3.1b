@@ -27,6 +27,14 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 575.98px) {
+  .page-section .page-section-heading {
+    font-size: 1.75rem;
+    line-height: 1.75rem;
+    overflow-wrap: anywhere;
+  }
+}
+
 .divider-custom {
   margin: 1.25rem 0 1.5rem;
   width: 100%;
