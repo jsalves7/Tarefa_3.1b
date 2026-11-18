@@ -18,6 +18,20 @@
             <AdminOptionBox routeName="listSponsors" iconName="hand-holding-heart"  title="Patrocinadores"/>
             <AdminOptionBox routeName="listExperts" iconName="user-graduate"  title="Especialistas"/>
           </b-card-group>
+          <nav aria-label="Protótipos HTML5" class="mt-4 text-center">
+            <a
+              href="/prototipos/sponsors.html"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-outline-info mr-2"
+            >Protótipo de patrocinadores</a>
+            <a
+              href="/prototipos/experts.html"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-outline-info"
+            >Protótipo de especialistas</a>
+          </nav>
         </b-col>
         <b-col cols="4"></b-col>
       </b-row>
