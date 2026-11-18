@@ -69,7 +69,8 @@ As rotas da vista pública da página de um animal exigem autenticação, mas de
 Cada entidade tem um protótipo em HTML5 semântico, com listagem, formulário e detalhe de exemplo. São ficheiros estáticos, sem JavaScript nem ligação à API, e usam o `animalec.css` da aplicação.
 
 - Ficheiros: `Front-end_Animalec/public/prototipos/sponsors.html` e `Front-end_Animalec/public/prototipos/experts.html`
-- Com o front-end a correr, abrem em `http://localhost:8081/prototipos/sponsors.html` e `http://localhost:8081/prototipos/experts.html`
+- Para ver o protótipo não é preciso correr o front-end nem o back-end: basta abrir o ficheiro HTML no browser (duplo clique ou `open Front-end_Animalec/public/prototipos/sponsors.html`). Os tipos de letra e os ícones vêm de CDN, por isso é preciso ligação à Internet
+- Com o front-end a correr, também abrem em `http://localhost:8081/prototipos/sponsors.html` e `http://localhost:8081/prototipos/experts.html`
 - Na aplicação, em **ADMIN** (`/admin`), estão os botões "Protótipo de patrocinadores" e "Protótipo de especialistas", por baixo dos cartões, que os abrem num novo separador
 
 As vistas Vue em `src/views/{sponsors,experts}/` são a versão funcional das mesmas páginas, ligada à API.
