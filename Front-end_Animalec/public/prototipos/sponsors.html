@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Protótipo: Patrocinadores | Animalec</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+    <link href="/css/animalec.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-dark bg-dark" aria-label="Navegação principal">
+        <a class="navbar-brand ml-5" href="/">Animalec</a>
+        <ul class="navbar-nav flex-row ml-auto mr-5">
+          <li class="nav-item mr-3"><a class="nav-link" href="/animals">ANIMAIS</a></li>
+          <li class="nav-item mr-3"><a class="nav-link" href="/quizzes">QUIZZES</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/admin" aria-current="page">ADMIN</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="container page-section">
+      <h1 class="page-section-heading text-center mt-5">Gestão de Patrocinadores</h1>
+      <p class="text-center text-muted">Protótipo estático em HTML5, com dados de exemplo e sem ligação à API.</p>
+      <nav aria-label="Secções do protótipo" class="mb-4 text-center">
+        <a class="btn btn-outline-info mr-2" href="#listagem">Listagem</a>
+        <a class="btn btn-outline-info mr-2" href="#formulario">Formulário</a>
+        <a class="btn btn-outline-info" href="#detalhe">Detalhe</a>
+      </nav>
+
+      <section id="listagem" aria-labelledby="titulo-listagem" class="mb-5">
+        <h2 id="titulo-listagem" class="h3">Listagem</h2>
+        <p>
+          <a class="btn btn-outline-success mr-2" href="#formulario"><i class="fas fa-plus-square" aria-hidden="true"></i> ADICIONAR PATROCINADOR</a>
+          <a class="btn btn-outline-info" href="/admin"><i class="fas fa-bars" aria-hidden="true"></i> MENU PRINCIPAL</a>
+        </p>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <caption class="sr-only">Lista de patrocinadores e animais patrocinados</caption>
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">NOME</th>
+                <th scope="col">TIPO</th>
+                <th scope="col">ANIMAIS</th>
+                <th scope="col">AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Exemplo, Lda.</td>
+                <td>Empresa</td>
+                <td>2: Leão, Tigre</td>
+                <td class="text-nowrap">
+                  <a class="btn btn-outline-success mr-2" href="#formulario"><i class="fas fa-edit" aria-hidden="true"></i> EDITAR</a>
+                  <a class="btn btn-outline-success mr-2" href="#detalhe"><i class="fas fa-search" aria-hidden="true"></i> VER</a>
+                  <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt" aria-hidden="true"></i> REMOVER</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Fundação Exemplo</td>
+                <td>Instituição</td>
+                <td>1: Leão</td>
+                <td class="text-nowrap">
+                  <a class="btn btn-outline-success mr-2" href="#formulario"><i class="fas fa-edit" aria-hidden="true"></i> EDITAR</a>
+                  <a class="btn btn-outline-success mr-2" href="#detalhe"><i class="fas fa-search" aria-hidden="true"></i> VER</a>
+                  <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt" aria-hidden="true"></i> REMOVER</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Maria Exemplo</td>
+                <td>Particular</td>
+                <td>0</td>
+                <td class="text-nowrap">
+                  <a class="btn btn-outline-success mr-2" href="#formulario"><i class="fas fa-edit" aria-hidden="true"></i> EDITAR</a>
+                  <a class="btn btn-outline-success mr-2" href="#detalhe"><i class="fas fa-search" aria-hidden="true"></i> VER</a>
+                  <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt" aria-hidden="true"></i> REMOVER</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="formulario" aria-labelledby="titulo-formulario" class="mb-5">
+        <h2 id="titulo-formulario" class="h3">Formulário (adicionar e editar)</h2>
+        <form action="#formulario">
+          <fieldset class="mb-4">
+            <legend>Dados de identificação</legend>
+            <div class="form-group">
+              <label for="txtName">Nome</label>
+              <input id="txtName" name="name" type="text" class="form-control form-control-lg" placeholder="escreve nome" required />
+            </div>
+            <div class="form-group">
+              <label for="sltType">Tipo</label>
+              <select id="sltType" name="type" class="form-control form-control-lg">
+                <option value="">-- SELECIONA TIPO --</option>
+                <option value="empresa">EMPRESA</option>
+                <option value="instituicao">INSTITUIÇÃO</option>
+                <option value="particular">PARTICULAR</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="txtEmail">Email</label>
+              <input id="txtEmail" name="email" type="email" class="form-control form-control-lg" placeholder="escreve email" required />
+            </div>
+            <div class="form-group">
+              <label for="txtWebsite">Website</label>
+              <input id="txtWebsite" name="website" type="url" class="form-control form-control-lg" placeholder="https://..." />
+            </div>
+            <div class="form-group">
+              <label for="txtLogo">Logótipo (URL da imagem)</label>
+              <input id="txtLogo" name="logo" type="url" class="form-control form-control-lg" placeholder="https://..." />
+            </div>
+            <div class="form-group">
+              <label for="txtDescription">Descrição</label>
+              <textarea id="txtDescription" name="description" class="form-control form-control-lg" placeholder="escreve descrição" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="datSince">Patrocinador desde</label>
+              <input id="datSince" name="since" type="date" class="form-control form-control-lg" />
+            </div>
+          </fieldset>
+          <fieldset class="mb-4">
+            <legend>Associações</legend>
+            <p class="mb-2">Animais patrocinados</p>
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input id="chkAnimalLeao" name="animals" type="checkbox" class="custom-control-input" value="leao" />
+              <label class="custom-control-label" for="chkAnimalLeao">Leão</label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input id="chkAnimalTigre" name="animals" type="checkbox" class="custom-control-input" value="tigre" />
+              <label class="custom-control-label" for="chkAnimalTigre">Tigre</label>
+            </div>
+          </fieldset>
+          <button type="submit" class="btn btn-outline-success btn-lg mr-2"><i class="fas fa-save" aria-hidden="true"></i> GUARDAR</button>
+          <a class="btn btn-outline-danger btn-lg" href="#listagem"><i class="fas fa-window-close" aria-hidden="true"></i> CANCELAR</a>
+        </form>
+      </section>
+
+      <section id="detalhe" aria-labelledby="titulo-detalhe" class="mb-5">
+        <h2 id="titulo-detalhe" class="h3">Detalhe</h2>
+        <article class="card">
+          <div class="card-body">
+            <h3 class="card-title h4">Exemplo, Lda.</h3>
+            <dl>
+              <dt>Estado</dt>
+              <dd>Ativo</dd>
+              <dt>Tipo</dt>
+              <dd>Empresa</dd>
+              <dt>Email</dt>
+              <dd>geral@exemplo.pt</dd>
+              <dt>Website</dt>
+              <dd><a href="https://exemplo.pt" target="_blank" rel="noopener noreferrer">https://exemplo.pt</a></dd>
+              <dt>Patrocinador desde</dt>
+              <dd><time datetime="2024-01-15">2024-01-15</time></dd>
+              <dt>Descrição</dt>
+              <dd>Empresa que apoia a conservação de felinos.</dd>
+              <dt>Animais patrocinados</dt>
+              <dd>2: Leão, Tigre</dd>
+            </dl>
+            <a class="btn btn-outline-info" href="#listagem">VOLTAR À LISTAGEM</a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="text-center text-muted my-4">
+      <small>Protótipo da Tarefa 3.1 b) · Animalec</small>
+    </footer>
+  </body>
+</html>

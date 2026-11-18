@@ -20,7 +20,8 @@ Aplicação web (Vue 2, Node/Express e MongoDB Atlas) sobre animais. Esta entreg
 |---|---|
 | Wireframes (draw.io, 8 páginas por entidade: menu, listagem, formulário, detalhe × browser 1280 px / mobile 375 px) | `docs/wireframes/{sponsors,experts}.drawio` (PDF A4 em `docs/wireframes/wireframes.pdf`) |
 | Mockups (mesmas 8 páginas, com cores e tipos de letra reais do Animalec) | `docs/mockups/{sponsors,experts}.drawio` (PDF A4 em `docs/mockups/mockups.pdf`) |
-| Protótipo HTML5 semântico, integrado no Admin | `Front-end_Animalec/src/views/{sponsors,experts}/`, `src/components/{SponsorForm,ExpertForm,AnimalPicker,AnimalSponsors,AnimalExperts}.vue` |
+| Protótipo HTML5 estático por entidade, ligado a partir do Admin (abrem num novo separador) | `Front-end_Animalec/public/prototipos/{sponsors,experts}.html` (em `/prototipos/sponsors.html` e `/prototipos/experts.html`) |
+| Protótipo HTML5 semântico funcional, integrado no Admin | `Front-end_Animalec/src/views/{sponsors,experts}/`, `src/components/{SponsorForm,ExpertForm,AnimalPicker,AnimalSponsors,AnimalExperts}.vue` |
 
 Os PDF foram gerados a partir dos `.drawio` com o draw.io e os wireframes são em tons de cinzento.
 
@@ -62,6 +63,16 @@ As rotas da vista pública da página de um animal exigem autenticação, mas de
 ## Rotas do front-end
 
 `/admin/sponsors`, `/admin/sponsors/add`, `/admin/sponsors/:sponsorId` e o equivalente (`:expertId`) para `/admin/experts`. A página de um animal mostra, por baixo do cartão, as secções "Patrocinadores" e "Especialistas".
+
+## Protótipos HTML5 estáticos
+
+Cada entidade tem um protótipo em HTML5 semântico, com listagem, formulário e detalhe de exemplo. São ficheiros estáticos, sem JavaScript nem ligação à API, e usam o `animalec.css` da aplicação.
+
+- Ficheiros: `Front-end_Animalec/public/prototipos/sponsors.html` e `Front-end_Animalec/public/prototipos/experts.html`
+- Com o front-end a correr, abrem em `http://localhost:8081/prototipos/sponsors.html` e `http://localhost:8081/prototipos/experts.html`
+- Na aplicação, em **ADMIN** (`/admin`), estão os botões "Protótipo de patrocinadores" e "Protótipo de especialistas", por baixo dos cartões, que os abrem num novo separador
+
+As vistas Vue em `src/views/{sponsors,experts}/` são a versão funcional das mesmas páginas, ligada à API.
 
 ## Decisões
 
